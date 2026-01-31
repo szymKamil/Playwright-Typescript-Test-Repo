@@ -4,6 +4,7 @@ import WebForm from "../../src/POM/BoniGarciaTestPage/pages/WebFormPage";
 import NavigationPage from "../../src/POM/BoniGarciaTestPage/pages/NavigationPage";
 import { DropdownMenuPage } from "../../src/POM/BoniGarciaTestPage/pages/DropdownMenuPage";
 import { MouseOverPage } from "../../src/POM/BoniGarciaTestPage/pages/MouseOverPage";
+import { DragAndDrop } from "../../src/POM/BoniGarciaTestPage/pages/DragAndDrop";
 
 test("Main page test - verification of visibility of elements", async ({
   page,
@@ -53,4 +54,12 @@ test("Mouse over page test", async ({ page }) => {
   await mainPage.openPage("Mouse over");
   const mouseOverPage = new MouseOverPage(page);
   await mouseOverPage.mouseOverImg();
+});
+
+test("Drag and drop page test", async ({ page }) => {
+  const mainPage = new MainPage(page);
+  await mainPage.openMainPage();
+  await mainPage.openPage("Drag and drop");
+  const dragAndDropPage = new DragAndDrop(page);
+  await dragAndDropPage.dragAndDropPanel();
 });
