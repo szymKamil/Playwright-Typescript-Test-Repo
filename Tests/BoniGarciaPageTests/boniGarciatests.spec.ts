@@ -5,6 +5,7 @@ import NavigationPage from "../../src/POM/BoniGarciaTestPage/pages/NavigationPag
 import { DropdownMenuPage } from "../../src/POM/BoniGarciaTestPage/pages/DropdownMenuPage";
 import { MouseOverPage } from "../../src/POM/BoniGarciaTestPage/pages/MouseOverPage";
 import { DragAndDrop } from "../../src/POM/BoniGarciaTestPage/pages/DragAndDrop";
+import { DrawInCanvas } from "../../src/POM/BoniGarciaTestPage/pages/DrawInCanvas";
 
 test("Main page test - verification of visibility of elements", async ({
   page,
@@ -62,4 +63,14 @@ test("Drag and drop page test", async ({ page }) => {
   await mainPage.openPage("Drag and drop");
   const dragAndDropPage = new DragAndDrop(page);
   await dragAndDropPage.dragAndDropPanel();
+});
+
+
+test("Draw in canvas page test", async ({ page }) => {
+  const mainPage = new MainPage(page);
+  await mainPage.openMainPage();
+  await mainPage.openPage("Draw in canvas");
+  const drawInCanvas = new DrawInCanvas(page);
+  await drawInCanvas.defaultDraw();
+  await drawInCanvas.drawInCanvas({x: 0, y: -30}, {x: 30, y: 30}, {x: -15, y: 30}, {x: 20, y: -60});
 });
