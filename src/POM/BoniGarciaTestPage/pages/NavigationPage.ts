@@ -1,7 +1,8 @@
 import { expect, Locator, Page } from "@playwright/test";
+import MainPage from "./MainPage";
 
-export default class NavigationPage {
-  readonly page: Page;
+export default class NavigationPage extends MainPage{
+  
   readonly lead: Locator;
   readonly buttons: Locator;
   readonly test1: string =
@@ -11,7 +12,7 @@ export default class NavigationPage {
   readonly test3: string = `Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.lead = page.locator("p.lead");
     this.buttons = page.locator("li.page-item");
   }

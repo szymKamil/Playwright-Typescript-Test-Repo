@@ -1,11 +1,11 @@
 import { Page, Locator, expect } from "@playwright/test";
 
-export default class MainPage {
+  export  default  class MainPage {
   readonly mainHeader: Locator;
   readonly logoImg: Locator;
   readonly cardBody: Locator;
   readonly subPageBtn: Locator;
-  private readonly page: Page;
+  public readonly page: Page;
 
   constructor(page: Page) {
     this.page = page;
