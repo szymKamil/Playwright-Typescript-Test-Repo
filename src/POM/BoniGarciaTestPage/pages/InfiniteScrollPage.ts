@@ -1,0 +1,25 @@
+import { Locator, Page } from "@playwright/test";
+import MainPage from "./MainPage";
+
+export class InfiniteScrollPage extends MainPage {
+  readonly paragraphs: Locator;
+
+  constructor(page: Page) {
+    super(page);
+    this.paragraphs = page.locator("p");
+  }
+
+  public async scrollXtimes(times: number): Promise<void> {
+    let lastParagraphCount = await this.paragraphs.count();
+
+    for (let i = 0; i < times; i++) {
+      await this.paragraphs
+        .nth(lastParagraphCount - 1)
+        .scrollIntoViewIfNeeded();
+      lastParagraphCount = await this.paragraphs.count();
+      console.log(
+        `Scrolled ${i + 1} times, current number of paragraphs: ${lastParagraphCount}`,
+      );
+    }
+  }
+}

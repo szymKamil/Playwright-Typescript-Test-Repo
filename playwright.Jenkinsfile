@@ -38,9 +38,9 @@ pipeline {
                 } catch (Exception e) {
                     echo "Błąd podczas publikowania raportu HTML: ${e.getMessage()}"
                     }
-                }  // ← BRAKOWAŁO zamknięcia script {}
-            }      // ← BRAKOWAŁO zamknięcia steps {}
-        }          // ← BRAKOWAŁO zamknięcia stage {}
+                }  
+            }      
+        }          
     }
 
     post {
