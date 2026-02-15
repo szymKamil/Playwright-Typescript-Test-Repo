@@ -23,7 +23,7 @@ import { Page, Locator, expect } from "@playwright/test";
   }
 
   async openPage(btnName: string): Promise<void> {
-    let btn = this.subPageBtn.filter({ hasText: btnName });
+    let btn = this.subPageBtn.getByText(btnName, { exact: true } );
     await expect(btn).toHaveCount(1);
     await btn.first().click();
   }

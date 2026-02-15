@@ -12,6 +12,9 @@ import { LongPage } from "../../src/POM/BoniGarciaTestPage/pages/LongPage";
 import { InfiniteScrollPage } from "../../src/POM/BoniGarciaTestPage/pages/InfiniteScrollPage";
 import { ShadowDOM } from "../../src/POM/BoniGarciaTestPage/pages/ShadowDOM";
 import { CookiesPage } from "../../src/POM/BoniGarciaTestPage/pages/CookiesPage";
+import { FramesPage } from "../../src/POM/BoniGarciaTestPage/pages/FramesPage";
+import { IFramePage } from "../../src/POM/BoniGarciaTestPage/pages/iFramePage";
+import { AlertParameter, DialgBoxesPage } from "../../src/POM/BoniGarciaTestPage/pages/DialogBoxesPage";
 
 test("Main page test - verification of visibility of elements", async ({
   page,
@@ -140,4 +143,33 @@ test("Cookies test", async ({ page }) => {
   );
   await cookiesPage.displayCookies();
   await cookiesPage.printCookiesInfo();
+});
+
+test("Frame page test", async ({ page }) => {
+  const mainPage = new MainPage(page);
+  await mainPage.openMainPage();
+  await mainPage.openPage("Frames");
+  const framesPage = new FramesPage(page);
+  await framesPage.verifyParagraphsInFrame();
+});
+
+test("iFrame page test", async ({ page }) => {
+  const mainPage = new MainPage(page);
+  await mainPage.openMainPage();
+  await mainPage.openPage("IFrames");
+  const iFramePage = new IFramePage(page);
+  await iFramePage.scrollToLastParagraph();
+});
+
+
+test("Dialog boxex page test", async ({ page }) => {
+  const mainPage = new MainPage(page);
+  await mainPage.openMainPage();
+  await mainPage.openPage("Dialog boxes");
+  const dialogBoxesPage = new DialgBoxesPage(page);
+  await dialogBoxesPage.launchAlert();
+  await dialogBoxesPage.launchConfirm(AlertParameter.Accept);
+  await dialogBoxesPage.launchPromt(AlertParameter.Accept, "Test string in prompt alert");
+
+
 });
