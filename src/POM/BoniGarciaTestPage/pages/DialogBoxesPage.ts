@@ -15,15 +15,29 @@ interface AlertConfig {
 export class DialgBoxesPage extends MainPage {
   private readonly launchAlertBtn: Locator;
   private readonly launchConfirmBtn: Locator;
+  private readonly confirmInfo: Locator;
   private readonly launchPromptBtn: Locator;
+  private readonly promptInfo: Locator;
   private readonly launchModalBtn: Locator;
+  private readonly modal: Locator;
+  private readonly modalInfo: Locator;
+  private readonly modalBody: Locator;
+  private readonly modalClose: Locator;
+  private readonly modalSave: Locator;
 
   constructor(page: Page) {
     super(page);
     this.launchAlertBtn = this.page.locator("#my-alert");
     this.launchConfirmBtn = this.page.locator("#my-confirm");
+    this.confirmInfo = this.page.locator("#confirm-text");
     this.launchPromptBtn = this.page.locator("#my-prompt");
+    this.promptInfo = this.page.locator("#prompt-text");
     this.launchModalBtn = this.page.locator("#my-modal");
+    this.modal = this.page.locator("#example-modal");
+    this.modalInfo = this.page.locator("#modal-text");
+    this.modalBody = this.modal.locator("div.modal-body");
+    this.modalClose = this.modal.locator("button.btn-secondary");
+    this.modalSave = this.modal.locator("button.btn-primary");
   }
 
   async alertRunner(alertConfig: AlertConfig) {
@@ -53,6 +67,11 @@ export class DialgBoxesPage extends MainPage {
       btn: this.page.locator("#my-confirm"),
       parameter: parameter,
     });
+    if ((parameter = "accept")) {
+      await expect(this.confirmInfo).toHaveText("You chose: true");
+    } else {
+      await expect(this.confirmInfo).toHaveText("You chose: false");
+    }
   }
   public async launchPromt(parameter: AlertParameter, input: string) {
     await this.alertRunner({
@@ -60,8 +79,18 @@ export class DialgBoxesPage extends MainPage {
       parameter: parameter,
       input: input,
     });
+    await expect(this.promptInfo).toHaveText("You typed: " + input);
   }
-  public async launchModal(parameter: AlertParameter, input: string) {
-    //TODO:
+  public async launchModal(parameter: AlertParameter) {
+    await this.launchModalBtn.click();
+    await expect(this.modal).toBeVisible();
+    await expect(this.modalBody).toHaveText("This is the modal body");
+    if (parameter == "accept") {
+      await this.modalSave.click();
+      await expect(this.modalInfo).toHaveText("You chose: Save changes");
+    } else {
+      await this.modalClose.click();
+      await expect(this.modalInfo).toHaveText("You chose: Close");
+    }
   }
 }

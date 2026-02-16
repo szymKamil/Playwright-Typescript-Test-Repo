@@ -14,7 +14,11 @@ import { ShadowDOM } from "../../src/POM/BoniGarciaTestPage/pages/ShadowDOM";
 import { CookiesPage } from "../../src/POM/BoniGarciaTestPage/pages/CookiesPage";
 import { FramesPage } from "../../src/POM/BoniGarciaTestPage/pages/FramesPage";
 import { IFramePage } from "../../src/POM/BoniGarciaTestPage/pages/iFramePage";
-import { AlertParameter, DialgBoxesPage } from "../../src/POM/BoniGarciaTestPage/pages/DialogBoxesPage";
+import {
+  AlertParameter,
+  DialgBoxesPage,
+} from "../../src/POM/BoniGarciaTestPage/pages/DialogBoxesPage";
+import { WebStoragePage } from "../../src/POM/BoniGarciaTestPage/pages/WebStoragePage";
 
 test("Main page test - verification of visibility of elements", async ({
   page,
@@ -161,7 +165,6 @@ test("iFrame page test", async ({ page }) => {
   await iFramePage.scrollToLastParagraph();
 });
 
-
 test("Dialog boxex page test", async ({ page }) => {
   const mainPage = new MainPage(page);
   await mainPage.openMainPage();
@@ -169,7 +172,26 @@ test("Dialog boxex page test", async ({ page }) => {
   const dialogBoxesPage = new DialgBoxesPage(page);
   await dialogBoxesPage.launchAlert();
   await dialogBoxesPage.launchConfirm(AlertParameter.Accept);
-  await dialogBoxesPage.launchPromt(AlertParameter.Accept, "Test string in prompt alert");
+  await dialogBoxesPage.launchPromt(
+    AlertParameter.Accept,
+    "Test string in prompt alert",
+  );
+  await dialogBoxesPage.launchModal(AlertParameter.Accept);
+});
 
-
+test("Web storage page test", async ({ page }) => {
+  const mainPage = new MainPage(page);
+  await mainPage.openMainPage();
+  const webStorage = new WebStoragePage(page);
+   await webStorage.modifySessionStorage(
+    { key: "grażyna", value: "kowalska" },
+    { key: "łukasz", value: "zboralski" },
+  );
+  await mainPage.openPage("Web storage");
+  await webStorage.modifyLocalStorage(
+    { key: "janusz", value: "kowalski" },
+    { key: "marcin", value: "daniec" },
+  );
+  await webStorage.openLocalStorage();
+  await webStorage.openSessionStorage();
 });
